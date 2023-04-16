@@ -1,0 +1,52 @@
+.poem-visual-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    align-items: center;
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        .form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2vh 2vw;
+            border: 1px solid black;
+            border-radius: 10px;
+            .input-box {
+                margin-top: 3vh;
+                font-size: 20px;
+                resize: none;
+                outline: none;
+                border: none;
+            }
+            .btn {
+                align-self: flex-end;
+                display: flex;
+                margin: 2vh 0;
+                gap: 2vw;
+                .btn-submit,.btn-clear {
+                    cursor: pointer;
+                    padding: 1.5vh 2vw;
+                    background-color: #F0ABB2;
+                    border-radius: 10px;
+                }
+                .btn-clear {
+                    background-color: #e0e0e0;
+                }
+            }
+        }
+        .form::before {
+            content: '';
+            width: 100%;
+            height: 3vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px 10px 0 0;
+            background-color: #F7e0e2;
+        }
+    }
+}

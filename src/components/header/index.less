@@ -1,0 +1,110 @@
+.header-wrapper {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 80vw;
+    border-bottom: 2px solid pink;
+    gap: 0;
+    .tab-wrapper {
+        height: 8vh;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        .app-msg {
+            display: flex;
+            justify-content: center;
+            gap: 5vw;
+            .app-logo {
+                width: 8vh;
+                height: 8vh;
+                border-radius: 50%;
+                background-color: palevioletred;
+            }
+            .app-title {
+                line-height: 8vh;
+                font-size: 32px;
+                color: pink;
+            }
+        }
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 2vw;
+            font-size: 20px;
+            .tab {
+                padding: 1vh 1vw;
+                cursor: pointer;
+                position: relative;
+                display: flex;
+                align-items: center;
+                .arrow {
+                    width: 24px;
+                    height: 24px;
+                    transition: all .2s ease-in-out;
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
+            .active {
+                height: 8vh;
+                .arrow {
+                    transform: rotateZ(90deg);
+                    transition: all .2s ease-in-out;
+                }
+            }
+        }
+    }
+    .types {
+        border-radius: 8px;
+        height: 0vh;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        overflow: hidden;
+        transition: all .3s linear;
+        .type {
+            cursor: pointer;
+            padding: 1vh 1vw;
+            border-radius: 8px;
+            position: relative;
+        }
+        .type::after {
+            content: '';
+            border-radius: 8px;
+            background-color: pink;
+            width: 0%;
+            height: 0%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: -1;
+            transition: all .3s linear;
+        }
+        .type:hover::after {
+            border-radius: 8px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0%;
+            top: 0%;
+            z-index: -1;
+            transition: all .3s linear;
+        }
+        .type-active::after {
+            border-radius: 8px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0%;
+            top: 0%;
+            z-index: -1;
+            transition: all .3s linear;
+        }
+    }
+    .active {
+        height: 8vh;
+        transition: all .3s linear;
+    }
+}
