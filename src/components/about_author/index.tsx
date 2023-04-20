@@ -1,10 +1,8 @@
 import React, { useRef, useState } from 'react'
-import Header from '../../../components/header'
+import search from '../../../assets/search.png'
 import './index.less'
-import { getJson } from '../../../server/fetch'
 
-export default function PoemVisual() {
-
+export default function About_Author() {
     const [content,setContent] = useState('')
     const [pic,setPic] = useState('')
 
@@ -15,6 +13,8 @@ export default function PoemVisual() {
     const clear = () => {
         setContent('')
     }
+
+
 
     async function submit (){
         // Default options are marked with *
@@ -36,18 +36,22 @@ export default function PoemVisual() {
         const res = response.json()
         res.then(
             data => {
-                console.log(data)
+                alert(data.image)
                 setPic('data:image/png;base64,'+data.image)
             }
         )
     }
 
-
     return (
-        <div className='poem-visual-wrapper'>
+        <div className='about-author-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <textarea className='input-box' onChange={changeContent} cols={75} rows={6} placeholder='请输入古诗词'/>
+                    <div className='input-wrapper'>
+                        <input type='text' className='input-box' value={content} onChange={changeContent} placeholder='请输入作者'/>
+                        <div className='search'>
+                            <img src={search} alt="" />
+                        </div>
+                    </div>
                     <div className='btn'>
                         <div className='btn-clear' onClick={clear}>清空</div>
                         <div className='btn-submit' onClick={submit}>确定</div>

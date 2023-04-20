@@ -1,30 +1,33 @@
-.poem-visual-wrapper {
+.inequality-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 5vh;
     align-items: center;
-    .content-wrapper {
+    .box {
+        width: 62vw;
         display: flex;
         flex-direction: column;
-        .form {
-            position: relative;
+        align-items: center;
+        position: relative;
+        border: 1px solid black;
+        border-radius: 10px;
+        .inequality-form {
+            min-width: 55vw;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             padding: 2vh 2vw;
-            border: 1px solid black;
-            border-radius: 10px;
+            gap: 2vw;
             .input-box {
-                max-width: 55vw;
+                width: 30vw;
                 margin-top: 3vh;
+                margin-bottom: 5vh;
                 font-size: 20px;
                 resize: none;
                 outline: none;
                 border: none;
             }
             .btn {
-                align-self: flex-end;
+                justify-self: flex-end;
                 display: flex;
                 margin: 2vh 0;
                 gap: 2vw;
@@ -39,15 +42,15 @@
                 }
             }
         }
-        .form::before {
-            content: '';
-            width: 100%;
-            height: 3vh;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-radius: 10px 10px 0 0;
-            background-color: #F7e0e2;
-        }
+    }
+    .box::before {
+        content: '';
+        width: 100%;
+        height: 3vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 10px 10px 0 0;
+        background-color: #F7e0e2;
     }
 }

@@ -1,4 +1,4 @@
-.poem-visual-wrapper {
+.learn-word-wrapper {
     display: flex;
     flex-direction: column;
     gap: 5vh;
@@ -6,6 +6,7 @@
     .content-wrapper {
         display: flex;
         flex-direction: column;
+        gap: 3vh;
         .form {
             position: relative;
             display: flex;
@@ -15,13 +16,25 @@
             padding: 2vh 2vw;
             border: 1px solid black;
             border-radius: 10px;
-            .input-box {
-                max-width: 55vw;
-                margin-top: 3vh;
-                font-size: 20px;
-                resize: none;
-                outline: none;
-                border: none;
+            .input-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 2vw;
+                .input-box {
+                    width: 55vw;
+                    margin-top: 3vh;
+                    margin-bottom: 5vh;
+                    font-size: 20px;
+                    resize: none;
+                    outline: none;
+                    border: none;
+                }
+                .search {
+                    max-width: 2.5vw;
+                    img {
+                        width: 100%;
+                    }
+                }
             }
             .btn {
                 align-self: flex-end;
@@ -48,6 +61,21 @@
             left: 0;
             border-radius: 10px 10px 0 0;
             background-color: #F7e0e2;
+        }
+        .story-box {
+            display: flex;
+            width: 100%;
+            height: 40vh;
+            background-color: #fff;
+            border: 1px solid #c4c1c1;
+            border-radius: 10px;
+            box-shadow: 4px 4px 8px gray;
+            .waiting {
+                align-self: center;
+                margin: 0 auto;
+                font-size: 24px;
+                color: gray;
+            }
         }
     }
 }

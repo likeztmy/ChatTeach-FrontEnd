@@ -1,0 +1,103 @@
+.sentence-analysis-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+    align-items: center;
+    .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 3vh;
+        .form {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2vh 2vw;
+            border: 1px solid black;
+            border-radius: 10px;
+            .input-box {
+                max-width: 55vw;
+                margin-top: 3vh;
+                font-size: 20px;
+                resize: none;
+                outline: none;
+                border: none;
+            }
+            .btn {
+                align-self: flex-end;
+                display: flex;
+                margin: 2vh 0;
+                gap: 2vw;
+                .btn-submit,.btn-clear {
+                    cursor: pointer;
+                    padding: 1.5vh 2vw;
+                    background-color: #F0ABB2;
+                    border-radius: 10px;
+                }
+                .btn-clear {
+                    background-color: #e0e0e0;
+                }
+            }
+        }
+        .form::before {
+            content: '';
+            width: 100%;
+            height: 3vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px 10px 0 0;
+            background-color: #F7e0e2;
+        }
+        .table {
+            border-collapse: collapse;
+            border: 1.5px solid gray;
+            thead {
+                background-color:#F7E0E2;
+                color: #888888;
+                font-size: 20px;
+            }
+            th,td {
+                border: 1.5px solid gray;
+                height: 8vh;
+                text-align: center;
+            }
+            .table-content {
+                border: 1.5px solid gray;
+                width: 45vw;
+                height: 8vh;
+                text-align: center;
+            }
+        }
+        .analysis-box {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid gray;
+            min-height: 28vh;
+            margin-bottom: 5vh;
+            .box-header {
+                display: flex;
+                align-items: center;
+                border-bottom: 1px solid gray;
+                padding: 2vh 1vw;
+                .box-header-smile {
+                    max-width: 2vw;
+                    max-height: 2vw;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .box-header-title {
+                    font-size: 20px;
+                    font-weight: bolder;
+                    color: #888888;
+                }
+            }
+            .box-content {
+                padding: 1vh 1vw;
+            }
+        }
+    }
+}

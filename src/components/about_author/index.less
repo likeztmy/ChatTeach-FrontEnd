@@ -1,4 +1,4 @@
-.poem-visual-wrapper {
+.about-author-wrapper {
     display: flex;
     flex-direction: column;
     gap: 5vh;
@@ -15,13 +15,25 @@
             padding: 2vh 2vw;
             border: 1px solid black;
             border-radius: 10px;
-            .input-box {
-                max-width: 55vw;
-                margin-top: 3vh;
-                font-size: 20px;
-                resize: none;
-                outline: none;
-                border: none;
+            .input-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 2vw;
+                .input-box {
+                    width: 55vw;
+                    margin-top: 3vh;
+                    margin-bottom: 5vh;
+                    font-size: 20px;
+                    resize: none;
+                    outline: none;
+                    border: none;
+                }
+                .search {
+                    max-width: 2.5vw;
+                    img {
+                        width: 100%;
+                    }
+                }
             }
             .btn {
                 align-self: flex-end;

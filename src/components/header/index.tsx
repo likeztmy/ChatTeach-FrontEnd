@@ -1,35 +1,113 @@
 import React, { Key, useState } from 'react'
 import './index.less'
-import arrow from '../../assets/arrow.png'
+import arrow from '../../../assets/arrow.png'
+import { useNavigate } from 'react-router-dom'
 
 interface table {
-    '首页': string[],
-    '语文': string[],
-    '数学': string[],
-    '英语': string[],
-    '信息技术': string[],
+    '首页': object[],
+    '语文': object[],
+    '数学': object[],
+    '英语': object[],
+    '信息技术': object[],
 }
 
 export default function Header() {
 
+    const navigate = useNavigate()
+
     const [tabs,setTabs] = useState([
-        '语文','数学','英语','信息技术'
+        {
+            name: '语文',
+            link: '/category/Chinese'
+        },
+        {
+            name: '数学',
+            link: '/category/math'
+        },
+        {
+            name: '英语',
+            link: '/category/English'
+        },
+        {
+            name: '信息技术',
+            link: '/category/Chinese'
+        }
     ])
 
     const [chinese,setChinese] = useState([
-        '古诗词可视化','作者生平图鉴','文言文解释','情境化问题设计'
+        {
+            name: '古诗词可视化',
+            link: '/category/Chinese/poem-visual'
+        },
+        {
+            name: '作者生平图鉴',
+            link: '/category/Chinese/about-author'
+        },
+        {
+            name: '文言文解释',
+            link: '/category/Chinese/classical-Chinese'
+        },
+        {
+            name: '情境化问题设计',
+            link: '/category/Chinese/write-essay'
+        },
     ])
 
     const [math,setMath] = useState([
-        '函数图像','不等式','积分分析','微分方程'
+        {
+            name: '函数图像',
+            link: '/category/math/function-image'
+        },
+        {
+            name: '不等式',
+            link: '/category/math/inequality'
+        },
+        {
+            name: '积分分析',
+            link: '/category/math/integral-analysis'
+        },
+        {
+            name: '微分方程',
+            link: '/category/math/differential-equation'
+        },
     ])
 
     const [english,setEnglish] = useState([
-        '生词学习','长难句理解','阅读理解','概要写作'
+        {
+            name: '生词学习',
+            link: '/category/English/learn-word'
+        },
+        {
+            name: '长难句理解',
+            link: '/category/English/sentence-analysis'
+        },
+        {
+            name: '阅读理解',
+            link: '/category/English/reading-comprehension'
+        },
+        {
+            name: '概要写作',
+            link: '/category/English/summary-writing'
+        },
     ])
 
     const [cs,setCs] = useState([
-        '古诗词可视化','作者生平图鉴','文言文解释','情境化问题设计'
+        {
+            name: '算法可视化',
+            link: '/category/Chinese/poem-visual'
+        },
+        {
+            name: '长难句理解',
+            link: '/category/Chinese/about-author'
+        },
+        {
+            name: '阅读理解',
+            link: '/category/Chinese/classical-Chinese'
+        },
+        {
+            name: '概要写作',
+            link: '/category/Chinese/summary-writing'
+        },
     ])
 
     const [tabSelected,setTabSelected] = useState<'首页'|'语文'|'数学'|'英语'|'信息技术'>('首页')
@@ -43,12 +121,23 @@ export default function Header() {
         '信息技术': cs,
     })
 
+    const toHome = () => {
+        setTabSelected('首页')
+        navigate('/home')
+    }
+
     const chooseTab = (tab:any) => {
-        setTabSelected(tab)
+        if(tab.name === '语文') setTypeSelected('古诗词可视化')
+        else if(tab.name === '数学') setTypeSelected('函数图像')
+        else if(tab.name === '英语') setTypeSelected('生词学习')
+        else setTypeSelected('算法可视化')
+        setTabSelected(tab.name)
+        navigate(tab.link)
     }
 
     const chooseType = (type:any) => {
-        setTypeSelected(type)
+        setTypeSelected(type.name)
+        navigate(type.link)
     }
 
     return (
@@ -59,17 +148,17 @@ export default function Header() {
                     <div className='app-title'>CHAT TEACH</div>
                 </div>
                 <div className='tabs'>
-                    <div className={`tab ${tabSelected === '首页'? 'active':''}`} onClick={() => chooseTab('首页')}>
+                    <div className={`tab ${tabSelected === '首页'? 'active':''}`} onClick={toHome}>
                         <div className='home'></div>
                         <div className='tab-name'>首页</div>
                     </div>
                     {
                         tabs.map(tab => 
-                            <div className={`tab ${tabSelected === tab? 'active':''}`} onClick={() => chooseTab(tab)}>
+                            <div className={`tab ${tabSelected === tab.name? 'active':''}`} onClick={() => chooseTab(tab)}>
                                 <div className='arrow'>
                                     <img src={arrow} alt="" />
                                 </div>
-                                <div className='tab-name'>{tab}</div>
+                                <div className='tab-name'>{tab.name}</div>
                             </div>    
                         )
                     }
@@ -77,8 +166,8 @@ export default function Header() {
             </div>
             <div className={`types ${tabSelected === '首页'? '':'active'}`}>
                     {
-                        table[tabSelected].map((type:string) => 
-                            <div className={`type ${typeSelected === type? 'type-active':''}`} onClick={() => chooseType(type)}>{type}</div>
+                        table[tabSelected]&&table[tabSelected].map((type:any) => 
+                            <div className={`type ${typeSelected === type.name? 'type-active':''}`} onClick={() => chooseType(type)}>{type.name}</div>
                         )
                     }
                 </div>

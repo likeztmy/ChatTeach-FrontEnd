@@ -1,12 +1,10 @@
-import React, { useRef, useState } from 'react'
-import Header from '../../../components/header'
+import React, { useState } from 'react'
+import search from '../../../assets/search.png'
 import './index.less'
-import { getJson } from '../../../server/fetch'
 
-export default function PoemVisual() {
+export default function Learn_Word() {
 
     const [content,setContent] = useState('')
-    const [pic,setPic] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -37,24 +35,29 @@ export default function PoemVisual() {
         res.then(
             data => {
                 console.log(data)
-                setPic('data:image/png;base64,'+data.image)
             }
         )
     }
 
 
     return (
-        <div className='poem-visual-wrapper'>
+        <div className='learn-word-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <textarea className='input-box' onChange={changeContent} cols={75} rows={6} placeholder='请输入古诗词'/>
+                    <div className='input-wrapper'>
+                        <input type='text' className='input-box' value={content} onChange={changeContent} placeholder='请输入生词'/>
+                        <div className='search'>
+                            <img src={search} alt="" />
+                        </div>
+                    </div>
                     <div className='btn'>
                         <div className='btn-clear' onClick={clear}>清空</div>
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                <div className='img-box'>
-                    <img src={pic} alt=''/>
+                <div className='story-box'>
+                    <div className='waiting'>故事生成中......</div>
+                    <div className='story'></div>
                 </div>
             </div>
         </div>

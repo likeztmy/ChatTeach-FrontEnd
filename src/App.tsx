@@ -4,13 +4,13 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './components/header'
 import PoemVisual from './pages/chinese/PoemVisual'
+import { useRoutes } from 'react-router-dom'
+import router from './router'
 
 function App() {
 
   return (
-    <div className="App">
-      <PoemVisual />
-    </div>
+    useRoutes(router)
   )
 }
 
