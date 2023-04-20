@@ -16,8 +16,8 @@ export default function Sentence_Analysis() {
     async function submit (){
         // Default options are marked with *
         const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('sentence',content)
+        const url='http://127.0.0.1:5000/api/sentence-analysis';
         console.log(formdata,content)
 
         const response = await fetch(url, {

@@ -36,8 +36,9 @@ export default function Reading_Comprehension() {
     async function submit (){
         // Default options are marked with *
         const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('article',content)
+        formdata.append('level',selected)
+        const url='http://127.0.0.1:5000/api/article-comprehension';
         console.log(formdata,content)
 
         const response = await fetch(url, {

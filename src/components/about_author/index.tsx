@@ -19,8 +19,8 @@ export default function About_Author() {
     async function submit (){
         // Default options are marked with *
         const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('name',content)
+        const url='http://127.0.0.1:5000/api/time-stamp';
         console.log(formdata,content)
 
         const response = await fetch(url, {

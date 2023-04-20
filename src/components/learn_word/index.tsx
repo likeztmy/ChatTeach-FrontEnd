@@ -6,6 +6,7 @@ export default function Learn_Word() {
 
     const [content,setContent] = useState('')
 
+    const [story,setStory] = useState('')
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
     }
@@ -16,9 +17,10 @@ export default function Learn_Word() {
 
     async function submit (){
         // Default options are marked with *
+        setStory('')
         const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('word',content)
+        const url='http://127.0.0.1:5000/api/story-generate';
         console.log(formdata,content)
 
         const response = await fetch(url, {
@@ -34,7 +36,8 @@ export default function Learn_Word() {
         const res = response.json()
         res.then(
             data => {
-                console.log(data)
+                console.log(data.text)
+                setStory(data.text)
             }
         )
     }
@@ -56,8 +59,8 @@ export default function Learn_Word() {
                     </div>
                 </div>
                 <div className='story-box'>
-                    <div className='waiting'>故事生成中......</div>
-                    <div className='story'></div>
+                    {story===''&&<div className='waiting'>故事生成中......</div>}
+                    {story!==''&&<div className='story'>{story}</div>}
                 </div>
             </div>
         </div>
