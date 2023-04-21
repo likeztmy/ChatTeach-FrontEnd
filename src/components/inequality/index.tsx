@@ -12,6 +12,8 @@ interface formula{
 
 export default function Inequality() {
 
+
+    const [pic,setPic] = useState('')
     const [formulas,setFormulas] = useState<formula[]>([
         {
             id:nanoid(),
@@ -58,8 +60,31 @@ export default function Inequality() {
         setFormulas(newFormula)
     }
 
-    const submit = () => {
+    async function submit() {
+        const formdata = new FormData()
+        formdata.append('number',`${formulas.length}`)
+        for(let i = 0; i < formulas.length; i++){
+            formdata.append(`lst${i}`,formulas[i].content)
+        }
+        const url='http://127.0.0.1:5000/api/inequality-plot';
 
+        const response = await fetch(url, {
+            method: 'POST', 
+            headers: {
+                // 'Content-Type': 'application/json;charset=utf-8',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            /*  redirect: 'follow', */ // manual, *follow, error
+            body: formdata // body data type must match "Content-Type" header
+        });
+    
+        const res = response.json()
+        res.then(
+            data => {
+                console.log(data)
+                setPic('data:image/png;base64,'+data.image)
+            }
+        )
     }
 
 
@@ -91,6 +116,9 @@ export default function Inequality() {
                     </div>
                     )
                 }
+            </div>
+            <div className='img-box'>
+                    <img src={pic} alt=''/>
             </div>
         </div>
     )

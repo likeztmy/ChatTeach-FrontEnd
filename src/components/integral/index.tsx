@@ -5,9 +5,9 @@ import add from '../../../assets/add.png'
 import delete_icon from '../../../assets/delete.png'
 import { nanoid } from 'nanoid'
 import { Radio, RadioChangeEvent } from 'antd'
+import { compute_definite_integral, compute_grad, compute_indefinite_integral, compute_lim, derivative, generate_definite_integral_image, generate_derivative_image, generate_indefinite_integral_image, generate_lim_image } from '../../server/fetch'
 
 interface variable {
-    id: string,
     name: string,
     left: string,
     right: string
@@ -20,14 +20,16 @@ export default function Integral_Analysis() {
         '定积分','不定积分','导数','梯度','极限'
     ])
     const [type,setType] = useState('定积分')
-    const [variables,setVariables] = useState<variable[]>([
+    const [variable,setVariable] = useState<variable>(
         {
-            id: nanoid(),
             name:'',
             left:'',
             right:''
         }
-    ])
+    )
+
+    const [pic1,setPic1] = useState('')
+    const [pic2,setPic2] = useState('')
 
     const changeFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFunc(e.target.value)
@@ -41,102 +43,109 @@ export default function Integral_Analysis() {
         setType(e.target.value)
     }
 
-    const changeName = (e: React.ChangeEvent<HTMLInputElement>,id: string) => {
-        const newVariables = variables.map((variable) => {
-            if(id === variable.id) 
-                return {
-                    id: id,
-                    name: e.target.value,
-                    left: variable.left,
-                    right: variable.right
-                }
-            else return variable
-        })
-        setVariables(newVariables)
-    }
-
-    const changeLeft = (e: React.ChangeEvent<HTMLInputElement>,id: string) => {
-        const newVariables = variables.map((variable) => {
-            if(id === variable.id) 
-                return {
-                    id: id,
-                    name: variable.name,
-                    left: e.target.value,
-                    right: variable.right
-                }
-            else return variable
-        })
-        setVariables(newVariables)
-    }
-
-    const changeRight = (e: React.ChangeEvent<HTMLInputElement>,id: string) => {
-        const newVariables = variables.map((variable) => {
-            if(id === variable.id) 
-                return {
-                    id: id,
-                    name: variable.name,
-                    left: variable.left,
-                    right: e.target.value
-                }
-            else return variable
-        })
-        setVariables(newVariables)
-    }
-
-    const addVariable = () => {
+    const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newVariable = {
-            id: nanoid(),
-            name:'',
-            left:'',
-            right:''
-        }
-        setVariables((variables) => [...variables,newVariable])
-    }
-
-    const deleteVariable = (id: string) => {
-        const newVariables = variables.filter((variable) => {
-            return id !== variable.id
-        })
-        setVariables(newVariables)
-    }
-
-    const reset = (id: string) => {
-        const newVariables = variables.map((variable) => {
-            if(id === variable.id) 
-                return {
-                    id: id,
-                    name: '',
-                    left: '',
-                    right: ''
-                }
-            else return variable
-        })
-        setVariables(newVariables)
-    }
-
-    async function submit (){
-        // Default options are marked with *
-        const formdata = new FormData()
-        formdata.append('text',func)
-        const url='http://127.0.0.1:5000/api/poem-visual';
-        console.log(formdata,func)
-
-        const response = await fetch(url, {
-            method: 'POST', 
-            headers: {
-                // 'Content-Type': 'application/json;charset=utf-8',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            /*  redirect: 'follow', */ // manual, *follow, error
-            body: formdata // body data type must match "Content-Type" header
-        });
-    
-        const res = response.json()
-        res.then(
-            data => {
-                alert(data.image)
+                name: e.target.value,
+                left: variable.left,
+                right: variable.right
             }
-        )
+        setVariable(newVariable)
+    }
+
+    const changeLeft = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newVariable = {
+            name: variable.name,
+            left:  e.target.value,
+            right: variable.right
+        }
+        setVariable(newVariable)
+    }
+
+    const changeRight = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newVariable = {
+            name: variable.name,
+            left:  variable.left,
+            right: e.target.value
+        }
+        setVariable(newVariable)
+    }
+
+    // const addVariable = () => {
+    //     const newVariable = {
+    //         id: nanoid(),
+    //         name:'',
+    //         left:'',
+    //         right:''
+    //     }
+    //     setVariables((variables) => [...variables,newVariable])
+    // }
+
+    // const deleteVariable = (id: string) => {
+    //     const newVariables = variables.filter((variable) => {
+    //         return id !== variable.id
+    //     })
+    //     setVariables(newVariables)
+    // }
+
+    const reset = () => {
+        const newVariable = {
+            name: '',
+            left:  '',
+            right: ''
+        }
+        setVariable(newVariable)
+    }
+
+    function submit (){
+        if(type === '定积分'){
+            compute_definite_integral(func,variable.name,`${variable.left}`,`${variable.right}`).then(
+                data => {
+                    setPic1(data.image)
+                }
+            )
+            generate_definite_integral_image(func,variable.name,`${variable.left}`,`${variable.right}`).then(
+                data => {
+                    setPic2(data.image)
+                }
+            )
+        }else if(type === '不定积分'){
+            compute_indefinite_integral(func,variable.name).then(
+                data => {
+                    setPic1(data.image)
+                }
+            )
+            generate_indefinite_integral_image(func,variable.name).then(
+                data => {
+                    setPic2(data.image)
+                }
+            )
+        }else if(type ==='求导'){
+            derivative(func).then(
+                data => {
+                    setPic1(data.image)
+                }
+            )
+            generate_derivative_image(func).then(
+                data => {
+                    setPic2(data.image)
+                }
+            )
+        }else if(type === '极限'){
+            compute_lim(func,variable.name,variable.left).then(
+                data => {
+                    setPic1(data.image)
+                }
+            )
+            generate_lim_image(func,variable.name,variable.left).then(
+                data => {
+                    setPic2(data.image)
+                }
+            )
+        }else {
+            compute_grad(func).then(
+                data => setPic1(data.image)
+            )
+        }
     }
 
     return (
@@ -158,45 +167,40 @@ export default function Integral_Analysis() {
                             )
                         }
                     </Radio.Group>
-                    {
-                        variables.map((variable,index)=> 
-                        <div className="variable-form" key={variable.id}>
-                            <div className="input-box-wrapper">
-                                <input 
-                                    type="text" 
-                                    value={variable.name} 
-                                    onChange={(e) => changeName(e,variable.id)} 
-                                    className='input-box' 
-                                    placeholder='变量'
-                                />
-                                <input 
-                                    type="text" 
-                                    value={variable.left} 
-                                    onChange={(e) => changeLeft(e,variable.id)} 
-                                    className='input-box' 
-                                    placeholder='左边界'
-                                />
-                                <input 
-                                    type="text" 
-                                    value={variable.right} 
-                                    onChange={(e) => changeRight(e,variable.id)} 
-                                    className='input-box' 
-                                    placeholder='右边界'
-                                />
-                            </div>
-                            {index === 0 &&<div className='add' onClick={addVariable}>
-                                <img src={add} alt="" />
-                            </div>}
-                            {index>0 &&<div className="delete" onClick={() => deleteVariable(variable.id)}>
-                            <img src={delete_icon} alt="" />
-                            </div>}
-                            <div className='btn'>
-                                <div className='btn-clear' onClick={()=>reset(variable.id)}>重置</div>
-                                <div className='btn-submit' onClick={submit}>确定</div>
-                            </div>
+                    <div className="variable-form">
+                        <div className="input-box-wrapper">
+                            <input 
+                                type="text" 
+                                value={variable.name} 
+                                onChange={(e) => changeName(e)} 
+                                className='input-box' 
+                                placeholder='变量'
+                            />
+                            {(type==='定积分'||type==='极限')&&<input 
+                                type="text" 
+                                value={variable.left} 
+                                onChange={(e) => changeLeft(e)} 
+                                className='input-box' 
+                                placeholder={type==='定积分'?'左边界':'趋势'}
+                            />}
+                            {type==='定积分'&&<input 
+                                type="text" 
+                                value={variable.right} 
+                                onChange={(e) => changeRight(e)} 
+                                className='input-box' 
+                                placeholder='右边界'
+                            />}
                         </div>
-                        )
-                    }
+                        <div className='btn'>
+                            <div className='btn-clear' onClick={reset}>重置</div>
+                        </div>
+                    </div>
+                </div>
+                <div className='img-box'>
+                    <img src={pic1} alt=''/>
+                </div>
+                <div className='img-box'>
+                    <img src={pic2} alt=''/>
                 </div>
             </div>
         </div>

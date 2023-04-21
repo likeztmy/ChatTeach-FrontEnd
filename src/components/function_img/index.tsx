@@ -187,7 +187,6 @@ export default function Function_Img() {
                             </div>}
                             <div className='btn'>
                                 <div className='btn-clear' onClick={()=>reset(variable.id)}>重置</div>
-                                <div className='btn-submit' onClick={submit}>确定</div>
                             </div>
                         </div>
                         )
