@@ -16,6 +16,7 @@ interface variable {
 export default function Function_Img() {
 
     const [func,setFunc] = useState('')
+    const [pic,setPic] = useState('')
     const [variables,setVariables] = useState<variable[]>([
         {
             id: nanoid(),
@@ -112,7 +113,7 @@ export default function Function_Img() {
         // Default options are marked with *
         const formdata = new FormData()
         formdata.append('function',func)
-        formdata.append('number','1')
+        formdata.append('option',`${variables.length}`)
         for(let i = 0; i < variables.length; i++){
             formdata.append(`var${i+1}`,variables[i].name)
             formdata.append(`variable_range_left${i+1}`,variables[i].left)
@@ -135,6 +136,7 @@ export default function Function_Img() {
         res.then(
             data => {
                 console.log(data)
+                setPic('data:image/png;base64,'+data.image)
             }
         )
     }
@@ -190,6 +192,9 @@ export default function Function_Img() {
                         </div>
                         )
                     }
+                </div>
+                <div className='img-box'>
+                    <img src={pic} alt=''/>
                 </div>
             </div>
         </div>

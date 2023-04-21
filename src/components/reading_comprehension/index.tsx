@@ -25,14 +25,35 @@ export default function Reading_Comprehension() {
         setSelected(level)
     }
 
-    const chooseImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    async function chooseImage (e: React.ChangeEvent<HTMLInputElement>){
         const files = e.target.files
         if(!files) return
         const file = files[0]
         const reader = new FileReader()
         reader.readAsDataURL(file)
-        reader.onload = function(e){
-            console.log(reader.result)
+        reader.onload = async function(e){
+            const image_data = reader.result
+            console.log(image_data)
+            const data = {
+                    'image_data': image_data
+                }
+            const response = await fetch('http://127.0.0.1:5000/api/ocr-image-identification',{
+                method: 'POST', 
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                /*  redirect: 'follow', */ // manual, *follow, error
+                body: JSON.stringify(data) // body data type must match "Content-Type" header
+            })
+            const res = response.json()
+            res.then(
+                data => {
+                    console.log(data)
+                    setContent(data.text)
+                    // setTable(data.text)
+                }
+            )
         }
     }
 

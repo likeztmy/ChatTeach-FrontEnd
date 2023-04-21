@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import './index.less'
 
 export default function Write_Essay() {
 
     const [content,setContent] = useState('')
     const [explanation,setExplanation] = useState('')
+    const [table,setTable] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -34,7 +37,10 @@ export default function Write_Essay() {
         res.then(
             data => {
                 console.log(data)
-                setExplanation(data.text)
+                const texts = data.text.split('\n\n')
+                console.log(texts)
+                setExplanation(texts[0])
+                setTable(texts[1])
             }
         )
     }
@@ -55,7 +61,8 @@ export default function Write_Essay() {
                         <div className='explanation-content'>{explanation}</div>
                     </div>
                 </div>
-                <table className='table'>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
+                {table===''&&<table className='table'>
                     <thead>
                         <tr>
                             <th></th>
@@ -88,7 +95,7 @@ export default function Write_Essay() {
                             <td></td>
                         </tr>
                     </tbody>
-                </table>
+                </table>}
             </div>
         </div>
     )
