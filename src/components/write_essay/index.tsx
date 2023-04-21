@@ -4,6 +4,7 @@ import './index.less'
 export default function Write_Essay() {
 
     const [content,setContent] = useState('')
+    const [explanation,setExplanation] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -15,8 +16,8 @@ export default function Write_Essay() {
     async function submit (){
         // Default options are marked with *
         const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('theme',content)
+        const url='http://127.0.0.1:5000/api/scene-generate';
         console.log(formdata,content)
 
         const response = await fetch(url, {
@@ -32,7 +33,8 @@ export default function Write_Essay() {
         const res = response.json()
         res.then(
             data => {
-                alert(data.image)
+                console.log(data)
+                setExplanation(data.text)
             }
         )
     }
@@ -48,7 +50,10 @@ export default function Write_Essay() {
                             <div className='btn-submit' onClick={submit}>确定</div>
                         </div>
                     </div>
-                    <div className='explanation'>释意：</div>
+                    <div className='explanation'>
+                        <div className='explanation-title'>释意：</div>
+                        <div className='explanation-content'>{explanation}</div>
+                    </div>
                 </div>
                 <table className='table'>
                     <thead>

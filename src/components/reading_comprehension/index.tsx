@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import camera from '../../../assets/camera.png'
 import './index.less'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export default function Reading_Comprehension() {
 
@@ -10,6 +12,7 @@ export default function Reading_Comprehension() {
     ])
     const [selected,setSelected] = useState('')
 
+    const [table,setTable] = useState('')
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
     }
@@ -54,7 +57,9 @@ export default function Reading_Comprehension() {
         const res = response.json()
         res.then(
             data => {
+                const title = '|   单词   |   词性   |  含义     |   词频    |   例句   | \n | :------: |:--------:|:--------:|:--------:|:--------:| \n '
                 console.log(data)
+                setTable(title+data.text)
             }
         )
     }
@@ -90,7 +95,7 @@ export default function Reading_Comprehension() {
                         }
                     </div>
                 </div>
-                <table className='table'>
+                {table===''&&<table className='table'>
                     <thead>
                         <tr>
                             <th>单词</th>
@@ -144,7 +149,8 @@ export default function Reading_Comprehension() {
                             <td></td>
                         </tr>
                     </tbody>
-                </table>
+                </table>}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
             </div>
         </div>
     )

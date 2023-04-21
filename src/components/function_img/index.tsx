@@ -16,10 +16,6 @@ interface variable {
 export default function Function_Img() {
 
     const [func,setFunc] = useState('')
-    const [types,setTypes] = useState([
-        '积分','不定积分','导数','梯度','极限'
-    ])
-    const [type,setType] = useState('定积分')
     const [variables,setVariables] = useState<variable[]>([
         {
             id: nanoid(),
@@ -38,9 +34,6 @@ export default function Function_Img() {
         setFunc('')
     }
 
-    const changeType = (e:RadioChangeEvent) => {
-        setType(e.target.value)
-    }
 
     const changeName = (e: React.ChangeEvent<HTMLInputElement>,id: string) => {
         const newVariables = variables.map((variable) => {
@@ -118,8 +111,14 @@ export default function Function_Img() {
     async function submit (){
         // Default options are marked with *
         const formdata = new FormData()
-        formdata.append('text',func)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('function',func)
+        formdata.append('number','1')
+        for(let i = 0; i < variables.length; i++){
+            formdata.append(`var${i+1}`,variables[i].name)
+            formdata.append(`variable_range_left${i+1}`,variables[i].left)
+            formdata.append(`variable_range_right${i+1}`,variables[i].right)
+        }
+        const url='http://127.0.0.1:5000/api/function-plot';
         console.log(formdata,func)
 
         const response = await fetch(url, {
@@ -135,7 +134,7 @@ export default function Function_Img() {
         const res = response.json()
         res.then(
             data => {
-                alert(data.image)
+                console.log(data)
             }
         )
     }

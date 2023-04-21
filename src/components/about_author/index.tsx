@@ -36,7 +36,7 @@ export default function About_Author() {
         const res = response.json()
         res.then(
             data => {
-                alert(data.image)
+
                 setPic('data:image/png;base64,'+data.image)
             }
         )

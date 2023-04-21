@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import smile from '../../../assets/smile.png'
 import './index.less'
+import 'github-markdown-css'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 export default function Sentence_Analysis() {
     const [content,setContent] = useState('')
+
+    const [table,setTable] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -33,7 +38,8 @@ export default function Sentence_Analysis() {
         const res = response.json()
         res.then(
             data => {
-                console.log(data)
+                console.log(data.text)
+                setTable(data.text)
             }
         )
     }
@@ -49,7 +55,7 @@ export default function Sentence_Analysis() {
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                <table className='table'>
+                {table===''&&<table className='table'>
                     <thead>
                         <tr>
                             <th>句子成分</th>
@@ -82,8 +88,9 @@ export default function Sentence_Analysis() {
                             <td className='table-content'></td>
                         </tr>
                     </tbody>
-                </table>
-                <div className='analysis-box'>
+                </table>}
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
+                {table===''&&<div className='analysis-box'>
                     <div className='box-header'>
                         <div className='box-header-smile'>
                             <img src={smile} alt="" />
@@ -91,7 +98,7 @@ export default function Sentence_Analysis() {
                         <div className='box-header-title'>整体分析: </div>
                     </div>
                     <div className="box-content"></div>
-                </div>
+                </div>}
             </div>
         </div>
     )
