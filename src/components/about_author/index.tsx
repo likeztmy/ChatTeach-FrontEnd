@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react'
 import search from '../../../assets/search.png'
 import './index.less'
 import Loading from '../loading'
+import { getMap } from '../../map'
 
 export default function AboutAuthor() {
     const [content,setContent] = useState('')
     const [pic,setPic] = useState('')
     const [isLoading,setIsLoading] = useState(false)
+    const [swf,setSwf] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -21,6 +23,12 @@ export default function AboutAuthor() {
     async function submit (){
         // Default options are marked with *
         setPic('')
+        if(content === '李白'||content==='杜甫'||content==='苏轼'){
+            
+            console.log(getMap(content))
+            setSwf(getMap(content))
+            return
+        }
         setIsLoading(true)
         const formdata = new FormData()
         formdata.append('name',content)
@@ -62,10 +70,10 @@ export default function AboutAuthor() {
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                {pic&&<div className='img-box'>
+                {!isLoading&&pic&&<div className='img-box'>
                     <img src={pic} alt=''/>
                 </div>}
-                {!isLoading&&pic&&content==='李白'&&<embed src='../../../assets/李白.swf' height="600" width="900" type="application/x-shockwave-flash" ></embed>}
+                {!isLoading&&swf&&<embed src={swf} height="600" width="900" type="application/x-shockwave-flash" ></embed>}
                 {isLoading&&<Loading/>}
             </div>
             

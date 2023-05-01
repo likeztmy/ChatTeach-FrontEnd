@@ -222,7 +222,7 @@ export default function ClassicalChinese() {
             </div>
             <div id='content' ref={contentRef} dangerouslySetInnerHTML={{__html:words(selected.article.order)}} className='content-wrapper'>
             </div>
-            <Read/>
+            {/* <Read/> */}
             <div className='translation-box' ref={myRef}>123456</div>
             {parent&&<Translation message={dic[parseInt(id)]} parent={parent}/>}
         </div>

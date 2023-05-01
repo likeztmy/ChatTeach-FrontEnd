@@ -3,6 +3,7 @@ import './index.less'
 import Loading from '../loading'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import { getExplanation, getGif } from '../../algorythm'
 
 
 export default function Algorithm_Visualization() {
@@ -18,40 +19,20 @@ export default function Algorithm_Visualization() {
     }
 
     async function submit(){
-        // Default options are marked with *
         setIsLoading(true)
-        // setPic('')
-        // const formdata = new FormData()
-        // formdata.append('text',content)
-        // const url='http://101.43.180.21:5000/api/poem-visual';
-        // console.log(formdata,content)
-
-        // const response = await fetch(url, {
-        //     method: 'POST', 
-        //     mode: 'no-cors',
-        //     headers: {
-        //         // 'Content-Type': 'application/json;charset=utf-8',
-        //         // 'Content-Type': 'application/x-www-form-urlencoded',
-        //     },
-        //     /*  redirect: 'follow', */ // manual, *follow, error
-        //     body: formdata // body data type must match "Content-Type" header
-        // });
-    
-        // const res = response.json()
-        // res.then(
-        //     data => {
-        //         console.log(data)
-        //         setIsLoading(false)
-        //         setPic('data:image/png;base64,'+data.image)
-        //     }
-        // )
+        setTimeout(() => {
+            setIsLoading(false)
+            setPic(getGif(content))
+            setMd(getExplanation(content))
+        },3000)
     }
 
     const clear = () => {
         setContent('')
         setIsLoading(false)
     }
-    
+    const dp = '# 步骤\n\n动态规划是解决LIS问题的一种常用方法。其基本思路是：对于序列中的每个元素，计算以该元素为结尾的最长上升子序列的长度，然后取所有长度中的最大值即为整个序列的最长上升子序列的长度。具体实现如下：\n\n1. 定义一个数组dp，其中dp[i]表示以第i个元素为结尾的最长上升子序列的长度。\n2. 初始化dp数组的所有元素为1，因为每个元素本身都可以看作是一个长度为1的上升子序列。\n3. 对于每个元素i，遍历其前面的所有元素j（j<i），如果nums[j]<nums[i]，则更新dp[i]的值为dp[j]+1。\n4. 遍历完所有元素后，取dp数组中的最大值即为整个序列的最长上升子序列的长度。\n\n# 时空复杂度\n\n时间复杂度：O(n^2)，其中n为序列的长度。因为需要遍历所有元素和其前面的所有元素。\n空间复杂度：O(n)，需要一个长度为n的数组dp来存储每个元素的最长上升子序列的长度。'
+
     return (
         <div className='algorithm-visualization-wrapper'>
             <div className='content-wrapper'>
@@ -67,7 +48,7 @@ export default function Algorithm_Visualization() {
                         {isLoading&&<Loading/>}
                         {!isLoading&&pic===''&&<div className='visualization-box-title'>可视化演示</div>}
                         {!isLoading&&pic!==''&&<div className='visualization-box-gif'>
-                            <img src={pic} alt="" />    
+                            <img className='gif' src={pic} alt="" />    
                         </div>}
                     </div>
                     <div className='algorythm-explanation'>
