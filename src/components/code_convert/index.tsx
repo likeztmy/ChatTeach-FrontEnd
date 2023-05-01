@@ -32,7 +32,7 @@ export default function Code_Convert() {
         const formdata = new FormData()
         formdata.append('code',content)
         formdata.append('target',type)
-        const url='http://127.0.0.1:5000/api/code-translation';
+        const url='http://101.43.180.21:5000/api/code-translation';
 
         const response = await fetch(url, {
             method: 'POST', 

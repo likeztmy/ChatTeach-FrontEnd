@@ -20,31 +20,31 @@ export default function Algorithm_Visualization() {
     async function submit(){
         // Default options are marked with *
         setIsLoading(true)
-        setPic('')
-        const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://101.43.180.21:5000/api/poem-visual';
-        console.log(formdata,content)
+        // setPic('')
+        // const formdata = new FormData()
+        // formdata.append('text',content)
+        // const url='http://101.43.180.21:5000/api/poem-visual';
+        // console.log(formdata,content)
 
-        const response = await fetch(url, {
-            method: 'POST', 
-            mode: 'no-cors',
-            headers: {
-                // 'Content-Type': 'application/json;charset=utf-8',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            /*  redirect: 'follow', */ // manual, *follow, error
-            body: formdata // body data type must match "Content-Type" header
-        });
+        // const response = await fetch(url, {
+        //     method: 'POST', 
+        //     mode: 'no-cors',
+        //     headers: {
+        //         // 'Content-Type': 'application/json;charset=utf-8',
+        //         // 'Content-Type': 'application/x-www-form-urlencoded',
+        //     },
+        //     /*  redirect: 'follow', */ // manual, *follow, error
+        //     body: formdata // body data type must match "Content-Type" header
+        // });
     
-        const res = response.json()
-        res.then(
-            data => {
-                console.log(data)
-                setIsLoading(false)
-                setPic('data:image/png;base64,'+data.image)
-            }
-        )
+        // const res = response.json()
+        // res.then(
+        //     data => {
+        //         console.log(data)
+        //         setIsLoading(false)
+        //         setPic('data:image/png;base64,'+data.image)
+        //     }
+        // )
     }
 
     const clear = () => {

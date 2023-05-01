@@ -22,7 +22,7 @@ export default function Code_Completion() {
         setPic('')
         const formdata = new FormData()
         formdata.append('code',content)
-        const url='http://127.0.0.1:5000/api/code-refactor';
+        const url='http://101.43.180.21:5000/api/code-refactor';
         console.log(formdata,content)
 
         const response = await fetch(url, {

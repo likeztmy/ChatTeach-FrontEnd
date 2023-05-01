@@ -28,7 +28,6 @@ export default function Code_Refactoring() {
 
         const response = await fetch(url, {
             method: 'POST', 
-            
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
