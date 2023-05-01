@@ -1,11 +1,13 @@
 import React, { useRef, useState } from 'react'
 import keyboard from '../../../assets/keyboard.png'
 import './index.less'
+import Loading from '../loading'
 
 export default function DE() {
     const [func,setFunc] = useState('')
     const [pic1,setPic1] = useState('')
     const [pic2,setPic2] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
 
     const changeFunc = (e: { target: { value: React.SetStateAction<string> } }) => {
         setFunc(e.target.value)
@@ -16,11 +18,14 @@ export default function DE() {
     }
 
     async function submit (){
+        setPic1('')
+        setPic2('')
+        setIsLoading(true)
         // Default options are marked with *
         const formdata = new FormData()
         formdata.append('expression',func)
-        const url1='http://127.0.0.1:5000/api/differential-equation-step';
-        const url2='http://127.0.0.1:5000/api/differential-equation-image';
+        const url1='http://101.43.180.21:5000/api/differential-equation-step';
+        const url2='http://101.43.180.21:5000/api/differential-equation-image';
         console.log(formdata,func)
 
         const response1 = await fetch(url1, {
@@ -36,6 +41,7 @@ export default function DE() {
         const res1 = response1.json()
         res1.then(
             data => {
+                setIsLoading(false)
                 setPic1('data:image/png;base64,'+data.image)
             }
         )
@@ -73,12 +79,13 @@ export default function DE() {
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                <div className='img-box'>
+                {pic1&&<div className='img-box'>
                     <img src={pic1} alt=''/>
-                </div>
-                <div className='img-box'>
+                </div>}
+                {pic2&&<div className='img-box'>
                     <img src={pic2} alt=''/>
-                </div>
+                </div>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

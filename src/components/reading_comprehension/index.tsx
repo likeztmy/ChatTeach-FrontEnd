@@ -3,15 +3,16 @@ import camera from '../../../assets/camera.png'
 import './index.less'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Loading from '../loading'
 
-export default function Reading_Comprehension() {
+export default function ReadingComprehension() {
 
     const [content,setContent] = useState('')
     const [levels,setLevels] = useState([
         '初中','高中','四级','六级','雅思','GRE'
     ])
     const [selected,setSelected] = useState('')
-
+    const [isLoading,setIsLoading] = useState(false)
     const [table,setTable] = useState('')
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -37,7 +38,7 @@ export default function Reading_Comprehension() {
             const data = {
                     'image_data': image_data
                 }
-            const response = await fetch('http://127.0.0.1:5000/api/ocr-image-identification',{
+            const response = await fetch('http://101.43.180.21:5000/api/ocr-image-identification',{
                 method: 'POST', 
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -59,10 +60,12 @@ export default function Reading_Comprehension() {
 
     async function submit (){
         // Default options are marked with *
+        setTable('')
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append('article',content)
         formdata.append('level',selected)
-        const url='http://127.0.0.1:5000/api/article-comprehension';
+        const url='http://101.43.180.21:5000/api/article-comprehension';
         console.log(formdata,content)
 
         const response = await fetch(url, {
@@ -116,7 +119,7 @@ export default function Reading_Comprehension() {
                         }
                     </div>
                 </div>
-                {table===''&&<table className='table'>
+                {!isLoading&&table===''&&<table className='table'>
                     <thead>
                         <tr>
                             <th>单词</th>
@@ -172,6 +175,7 @@ export default function Reading_Comprehension() {
                     </tbody>
                 </table>}
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

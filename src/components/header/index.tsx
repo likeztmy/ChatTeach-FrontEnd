@@ -1,7 +1,8 @@
-import React, { Key, useState } from 'react'
+import React, { Key, useEffect, useState } from 'react'
 import './index.less'
 import arrow from '../../../assets/arrow.png'
-import { useNavigate } from 'react-router-dom'
+import logo from '../../../assets/logo.png'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 interface table {
     '首页': object[],
@@ -30,7 +31,7 @@ export default function Header() {
         },
         {
             name: '信息技术',
-            link: '/category/Chinese'
+            link: '/category/cs'
         }
     ])
 
@@ -94,19 +95,19 @@ export default function Header() {
     const [cs,setCs] = useState([
         {
             name: '算法可视化',
-            link: '/category/Chinese/poem-visual'
+            link: '/category/cs/algorithm-visualization'
         },
         {
-            name: '长难句理解',
-            link: '/category/Chinese/about-author'
+            name: '代码重构',
+            link: '/category/cs/code-refactoring'
         },
         {
-            name: '阅读理解',
-            link: '/category/Chinese/classical-Chinese'
+            name: '代码转换',
+            link: '/category/cs/code-convert'
         },
         {
-            name: '概要写作',
-            link: '/category/Chinese/summary-writing'
+            name: '代码补全',
+            link: '/category/cs/code-completion'
         },
     ])
 
@@ -140,11 +141,24 @@ export default function Header() {
         navigate(type.link)
     }
 
+    const location = useLocation()
+
+    useEffect(() => {
+        if(location.pathname ==='/home') setTabSelected('首页')
+        else if(location.pathname.includes('/category/Chinese')) setTabSelected('语文')
+        else if(location.pathname.includes('/category/math')) setTabSelected('数学')
+        else if(location.pathname.includes('/category/English')) setTabSelected('英语')
+        else setTabSelected('信息技术')
+        console.log(location.pathname)
+    },[])
+
     return (
         <div className='header-wrapper'>
             <div className='tab-wrapper'>
                 <div className='app-msg'>
-                    <div className='app-logo'></div>
+                    <div className='app-logo'>
+                        <img src={logo} alt="" />
+                    </div>
                     <div className='app-title'>CHAT TEACH</div>
                 </div>
                 <div className='tabs'>

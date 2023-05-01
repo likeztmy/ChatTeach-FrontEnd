@@ -1,6 +1,6 @@
 export  async function postData (url = '', data = {},method: 'POST'){
     // Default options are marked with *
-    const preurl='http://127.0.0.1:5000';
+    const preurl='http://101.43.180.21:5000';
 
     const response = await fetch(preurl+url, {
         method, 
@@ -17,7 +17,7 @@ export  async function postData (url = '', data = {},method: 'POST'){
 
 export  async function getJson (url = ''){
 // Default options are marked with *
-    const preurl='http://127.0.0.1:5000';
+    const preurl='http://101.43.180.21:5000';
     const response = await fetch(preurl+url, {
         method:'GET', 
         headers: {
@@ -36,7 +36,7 @@ export async function compute_definite_integral(expression:string,int_var:string
     formdata.append('int_var',int_var)
     formdata.append('left',left)
     formdata.append('right',right)
-    const url='http://127.0.0.1:5000/api/definite-integral-step';
+    const url='http://101.43.180.21:5000/api/definite-integral-step';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -58,7 +58,7 @@ export async function generate_definite_integral_image(expression:string,int_var
     formdata.append('int_var',int_var)
     formdata.append('left',left)
     formdata.append('right',right)
-    const url='http://127.0.0.1:5000/api/definite-integral-image';
+    const url='http://101.43.180.21:5000/api/definite-integral-image';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -78,7 +78,7 @@ export async function compute_indefinite_integral(expression:string,int_var:stri
     const formdata = new FormData()
     formdata.append('expression',expression)
     formdata.append('int_var',int_var)
-    const url='http://127.0.0.1:5000/api/indefinite-integral-step';
+    const url='http://101.43.180.21:5000/api/indefinite-integral-step';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -98,7 +98,7 @@ export async function generate_indefinite_integral_image(expression:string,int_v
     const formdata = new FormData()
     formdata.append('expression',expression)
     formdata.append('int_var',int_var)
-    const url='http://127.0.0.1:5000/api/indefinite-integral-image';
+    const url='http://101.43.180.21:5000/api/indefinite-integral-image';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -117,7 +117,7 @@ export async function generate_indefinite_integral_image(expression:string,int_v
 export async function derivative(expression:string){
     const formdata = new FormData()
     formdata.append('expression',expression)
-    const url='http://127.0.0.1:5000/api/derivative-step';
+    const url='http://101.43.180.21:5000/api/derivative-step';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -136,7 +136,7 @@ export async function derivative(expression:string){
 export async function generate_derivative_image(expression:string){
     const formdata = new FormData()
     formdata.append('expression',expression)
-    const url='http://127.0.0.1:5000/api/derivative-image';
+    const url='http://101.43.180.21:5000/api/derivative-image';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -155,7 +155,7 @@ export async function generate_derivative_image(expression:string){
 export async function compute_grad(expression:string){
     const formdata = new FormData()
     formdata.append('expression',expression)
-    const url='http://127.0.0.1:5000/api/grad-step';
+    const url='http://101.43.180.21:5000/api/grad-step';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -176,7 +176,7 @@ export async function compute_lim(expression:string,int_var:string,tendency:stri
     formdata.append('expression',expression)
     formdata.append('var',int_var)
     formdata.append('tendency',tendency)
-    const url='http://127.0.0.1:5000/api/limit-step';
+    const url='http://101.43.180.21:5000/api/limit-step';
 
     const response = await fetch(url, {
         method: 'POST', 
@@ -197,7 +197,7 @@ export async function generate_lim_image(expression:string,int_var:string,tenden
     formdata.append('expression',expression)
     formdata.append('var',int_var)
     formdata.append('tendency',tendency)
-    const url='http://127.0.0.1:5000/api/limit-image';
+    const url='http://101.43.180.21:5000/api/limit-image';
 
     const response = await fetch(url, {
         method: 'POST', 

@@ -4,11 +4,12 @@ import smile from '../../../assets/smile.png'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import './index.less'
+import Loading from '../loading'
 
-export default function Summary_Writing() {
+export default function SummaryWriting() {
     const [content,setContent] = useState('')
     const [table,setTable] = useState('')
-
+    const [isLoading,setIsLoading] = useState(false)
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
     }
@@ -26,7 +27,7 @@ export default function Summary_Writing() {
         const formdata = new FormData()
         formdata.append('file',file)
         console.log(formdata)
-        const response = await fetch('http://127.0.0.1:5000/api/ocr-image-identification',{
+        const response = await fetch('http://101.43.180.21:5000/api/ocr-image-identification',{
             method: 'POST', 
             headers: {
                 // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,9 +47,11 @@ export default function Summary_Writing() {
 
     async function submit (){
         // Default options are marked with *
+        setTable('')
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append('article',content)
-        const url='http://127.0.0.1:5000/api/summary-writing';
+        const url='http://101.43.180.21:5000/api/summary-writing';
         console.log(formdata,content)
 
         const response = await fetch(url, {
@@ -65,6 +68,7 @@ export default function Summary_Writing() {
         res.then(
             data => {
                 console.log(data)
+                setIsLoading(false)
                 setTable(data.text)
             }
         )
@@ -86,7 +90,7 @@ export default function Summary_Writing() {
                     </div>
                 </div>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
-                {table===''&&<div className='keywords-box'>
+                {!isLoading&&table===''&&<div className='keywords-box'>
                     <div className='box-header'>
                         <div className='box-header-smile'>
                             <img src={smile} alt="" />
@@ -95,7 +99,7 @@ export default function Summary_Writing() {
                     </div>
                     <div className="box-content"></div>
                 </div>}
-                {table===''&&<div className='summary-box'>
+                {!isLoading&&table===''&&<div className='summary-box'>
                     <div className='box-header'>
                         <div className='box-header-smile'>
                             <img src={smile} alt="" />
@@ -106,6 +110,7 @@ export default function Summary_Writing() {
                         概要生成中......
                     </div>
                 </div>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

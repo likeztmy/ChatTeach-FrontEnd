@@ -6,6 +6,7 @@ import delete_icon from '../../../assets/delete.png'
 import { nanoid } from 'nanoid'
 import { Radio, RadioChangeEvent } from 'antd'
 import { compute_definite_integral, compute_grad, compute_indefinite_integral, compute_lim, derivative, generate_definite_integral_image, generate_derivative_image, generate_indefinite_integral_image, generate_lim_image } from '../../server/fetch'
+import Loading from '../loading'
 
 interface variable {
     name: string,
@@ -13,7 +14,7 @@ interface variable {
     right: string
 }
 
-export default function Integral_Analysis() {
+export default function IntegralAnalysis() {
 
     const [func,setFunc] = useState('')
     const [types,setTypes] = useState([
@@ -30,6 +31,7 @@ export default function Integral_Analysis() {
 
     const [pic1,setPic1] = useState('')
     const [pic2,setPic2] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
 
     const changeFunc = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFunc(e.target.value)
@@ -97,53 +99,67 @@ export default function Integral_Analysis() {
     }
 
     function submit (){
+        setPic1('')
+        setPic2('')
+        setIsLoading(true)
         if(type === '定积分'){
             compute_definite_integral(func,variable.name,`${variable.left}`,`${variable.right}`).then(
                 data => {
+                    setIsLoading(false)
                     setPic1(data.image)
                 }
             )
             generate_definite_integral_image(func,variable.name,`${variable.left}`,`${variable.right}`).then(
                 data => {
+                    setIsLoading(false)
                     setPic2(data.image)
                 }
             )
         }else if(type === '不定积分'){
             compute_indefinite_integral(func,variable.name).then(
                 data => {
+                    setIsLoading(false)
                     setPic1(data.image)
                 }
             )
             generate_indefinite_integral_image(func,variable.name).then(
                 data => {
+                    setIsLoading(false)
                     setPic2(data.image)
                 }
             )
         }else if(type ==='求导'){
             derivative(func).then(
                 data => {
+                    setIsLoading(false)
                     setPic1(data.image)
                 }
             )
             generate_derivative_image(func).then(
                 data => {
+                    setIsLoading(false)
                     setPic2(data.image)
                 }
             )
         }else if(type === '极限'){
             compute_lim(func,variable.name,variable.left).then(
                 data => {
+                    setIsLoading(false)
                     setPic1(data.image)
                 }
             )
             generate_lim_image(func,variable.name,variable.left).then(
                 data => {
+                    setIsLoading(false)
                     setPic2(data.image)
                 }
             )
         }else {
             compute_grad(func).then(
-                data => setPic1(data.image)
+                data => {
+                    setIsLoading(false)
+                    setPic1(data.image)
+                }
             )
         }
     }
@@ -196,12 +212,13 @@ export default function Integral_Analysis() {
                         </div>
                     </div>
                 </div>
-                <div className='img-box'>
+                {pic1&&<div className='img-box'>
                     <img src={pic1} alt=''/>
-                </div>
-                <div className='img-box'>
+                </div>}
+                {pic2&&<div className='img-box'>
                     <img src={pic2} alt=''/>
-                </div>
+                </div>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

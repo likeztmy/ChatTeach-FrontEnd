@@ -1,30 +1,33 @@
-import React, { useRef, useState } from 'react'
-import Header from '../../../components/header'
+import React, { useState } from 'react'
 import './index.less'
-import { getJson } from '../../../server/fetch'
+import Loading from '../loading'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
-export default function PoemVisual() {
+export default function Code_Completion() {
 
+    
     const [content,setContent] = useState('')
     const [pic,setPic] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
+    const [md,setMd] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
     }
 
-    const clear = () => {
-        setContent('')
-    }
-
-    async function submit (){
+    async function submit(){
         // Default options are marked with *
+        setIsLoading(true)
+        setPic('')
         const formdata = new FormData()
-        formdata.append('text',content)
-        const url='http://127.0.0.1:5000/api/poem-visual';
+        formdata.append('code',content)
+        const url='http://127.0.0.1:5000/api/code-refactor';
         console.log(formdata,content)
 
         const response = await fetch(url, {
             method: 'POST', 
+            mode: 'no-cors',
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -37,26 +40,34 @@ export default function PoemVisual() {
         res.then(
             data => {
                 console.log(data)
-                setPic('data:image/png;base64,'+data.image)
+                setIsLoading(false)
             }
         )
     }
 
-
+    const clear = () => {
+        setContent('')
+        setIsLoading(false)
+    }
+    
     return (
-        <div className='poem-visual-wrapper'>
+        <div className='code-completion-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <textarea className='input-box' onChange={changeContent} cols={75} rows={6} placeholder='请输入古诗词'/>
+                    <textarea className='input-box' onChange={changeContent} cols={50} rows={6} placeholder='请输入原始代码'/>
                     <div className='btn'>
                         <div className='btn-clear' onClick={clear}>清空</div>
                         <div className='btn-submit' onClick={submit}>确定</div>
+                    </div>  
+                </div>
+                <div className='result-wrapper'>
+                    <div className='code-box'>
+                        {isLoading&&<Loading/>}
+                        {!isLoading&&md===''&&<div className='code-box-title'>补全及解释</div>}
+                        {!isLoading&&md!==''&&<ReactMarkdown remarkPlugins={[remarkGfm]}>{md}</ReactMarkdown>}
                     </div>
                 </div>
-                <div className='img-box'>
-                    <img src={pic} alt=''/>
-                </div>
-            </div>
+            </div>  
         </div>
     )
 }

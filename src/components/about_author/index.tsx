@@ -1,10 +1,12 @@
 import React, { useRef, useState } from 'react'
 import search from '../../../assets/search.png'
 import './index.less'
+import Loading from '../loading'
 
-export default function About_Author() {
+export default function AboutAuthor() {
     const [content,setContent] = useState('')
     const [pic,setPic] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -18,13 +20,16 @@ export default function About_Author() {
 
     async function submit (){
         // Default options are marked with *
+        setPic('')
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append('name',content)
-        const url='http://127.0.0.1:5000/api/time-stamp';
+        const url='http://101.43.180.21:5000/api/time-stamp';
         console.log(formdata,content)
 
         const response = await fetch(url, {
             method: 'POST', 
+            mode: 'no-cors',
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -36,7 +41,7 @@ export default function About_Author() {
         const res = response.json()
         res.then(
             data => {
-
+                setIsLoading(false)
                 setPic('data:image/png;base64,'+data.image)
             }
         )
@@ -57,10 +62,13 @@ export default function About_Author() {
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                <div className='img-box'>
+                {pic&&<div className='img-box'>
                     <img src={pic} alt=''/>
-                </div>
+                </div>}
+                {!isLoading&&pic&&content==='李白'&&<embed src='../../../assets/李白.swf' height="600" width="900" type="application/x-shockwave-flash" ></embed>}
+                {isLoading&&<Loading/>}
             </div>
+            
         </div>
     )
 }

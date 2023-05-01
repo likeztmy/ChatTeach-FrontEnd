@@ -2,12 +2,14 @@ import React, { useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import './index.less'
+import Loading from '../loading'
 
-export default function Write_Essay() {
+export default function WriteEssay() {
 
     const [content,setContent] = useState('')
     const [explanation,setExplanation] = useState('')
     const [table,setTable] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
@@ -18,9 +20,11 @@ export default function Write_Essay() {
     }
     async function submit (){
         // Default options are marked with *
+        setTable('')
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append('theme',content)
-        const url='http://127.0.0.1:5000/api/scene-generate';
+        const url='http://101.43.180.21:5000/api/scene-generate';
         console.log(formdata,content)
 
         const response = await fetch(url, {
@@ -37,6 +41,7 @@ export default function Write_Essay() {
         res.then(
             data => {
                 console.log(data)
+                setIsLoading(false)
                 const texts = data.text.split('\n\n')
                 console.log(texts)
                 setExplanation(texts[0])
@@ -62,7 +67,7 @@ export default function Write_Essay() {
                     </div>
                 </div>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
-                {table===''&&<table className='table'>
+                {!isLoading&&table===''&&<table className='table'>
                     <thead>
                         <tr>
                             <th></th>
@@ -96,6 +101,7 @@ export default function Write_Essay() {
                         </tr>
                     </tbody>
                 </table>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

@@ -4,10 +4,11 @@ import './index.less'
 import 'github-markdown-css'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import Loading from '../loading'
 
-export default function Sentence_Analysis() {
+export default function SentenceAnalysis() {
     const [content,setContent] = useState('')
-
+    const [isLoading,setIsLoading] = useState(false)
     const [table,setTable] = useState('')
 
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -19,10 +20,12 @@ export default function Sentence_Analysis() {
     }
 
     async function submit (){
+        setTable('')
+        setIsLoading(true)
         // Default options are marked with *
         const formdata = new FormData()
         formdata.append('sentence',content)
-        const url='http://127.0.0.1:5000/api/sentence-analysis';
+        const url='http://101.43.180.21:5000/api/sentence-analysis';
         console.log(formdata,content)
 
         const response = await fetch(url, {
@@ -39,6 +42,7 @@ export default function Sentence_Analysis() {
         res.then(
             data => {
                 console.log(data.text)
+                setIsLoading(false)
                 setTable(data.text)
             }
         )
@@ -55,7 +59,7 @@ export default function Sentence_Analysis() {
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                {table===''&&<table className='table'>
+                {!isLoading&&table===''&&<table className='table'>
                     <thead>
                         <tr>
                             <th>句子成分</th>
@@ -90,7 +94,7 @@ export default function Sentence_Analysis() {
                     </tbody>
                 </table>}
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{table}</ReactMarkdown>
-                {table===''&&<div className='analysis-box'>
+                {!isLoading&&table===''&&<div className='analysis-box'>
                     <div className='box-header'>
                         <div className='box-header-smile'>
                             <img src={smile} alt="" />
@@ -99,6 +103,7 @@ export default function Sentence_Analysis() {
                     </div>
                     <div className="box-content"></div>
                 </div>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

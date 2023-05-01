@@ -1,19 +1,22 @@
 import { Navigate, RouteObject } from "react-router-dom";
 import Home from "../components/home";
-import PoemVisual from "../pages/chinese/PoemVisual";
-import About_Author from "../components/about_author";
-import Classical_Chinese from "../components/classical_Chinese";
-import Write_Essay from "../components/write_essay";
+import PoemVisual from "../components/PoemVisual";
+import AboutAuthor from "../components/about_author";
+import ClassicalChinese from "../components/classical_Chinese";
+import WriteEssay from "../components/write_essay";
 import Layout from "../components/layout";
-import Function_Img from "../components/function_img";
+import FunctionImg from "../components/function_img";
 import Inequality from "../components/inequality";
-import Integral_Analysis from "../components/integral";
+import IntegralAnalysis from "../components/integral";
 import DE from "../components/differential_equation";
+import SentenceAnalysis from "../components/sentence_analysis";
 import LearnWord from "../components/learn_word";
-import Sentence_Analysis from "../components/sentence_analysis";
-import Learn_Word from "../components/learn_word";
-import Reading_Comprehension from "../components/reading_comprehension";
-import Summary_Writing from "../components/summary_writing";
+import ReadingComprehension from "../components/reading_comprehension";
+import SummaryWriting from "../components/summary_writing";
+import Algorithm_Visualization from "../components/algorithm-visualization";
+import Code_Refactoring from "../components/code_refactoring";
+import Code_Convert from "../components/code_convert";
+import Code_Completion from "../components/code_completion";
 
 const router: RouteObject[] = [
     {
@@ -30,20 +33,24 @@ const router: RouteObject[] = [
         children: [
             {path:'Chinese',element: <Navigate to='/category/Chinese/poem-visual'/>},
             {path:'Chinese/poem-visual',element: <PoemVisual/>},
-            {path:'Chinese/about-author',element:<About_Author/>},
-            {path:'Chinese/classical-Chinese',element: <Classical_Chinese/>},
-            {path:'Chinese/write-essay',element:<Write_Essay/>},
+            {path:'Chinese/about-author',element:<AboutAuthor/>},
+            {path:'Chinese/classical-Chinese',element: <ClassicalChinese/>},
+            {path:'Chinese/write-essay',element:<WriteEssay/>},
             {path:'math',element: <Navigate to='/category/math/function-image'/>},
-            {path:'math/function-image',element: <Function_Img/>},
+            {path:'math/function-image',element: <FunctionImg/>},
             {path:'math/inequality',element:<Inequality/>},
-            {path:'math/integral-analysis',element: <Integral_Analysis/>},
+            {path:'math/integral-analysis',element: <IntegralAnalysis/>},
             {path:'math/differential-equation',element:<DE/>},
             {path:'English',element: <Navigate to='/category/English/learn-word'/>},
-            {path:'English/learn-word',element: <Learn_Word/>},
-            {path:'English/sentence-analysis',element:<Sentence_Analysis/>},
-            {path:'English/reading-comprehension',element: <Reading_Comprehension/>},
-            {path:'English/summary-writing',element:<Summary_Writing/>}
-
+            {path:'English/learn-word',element: <LearnWord/>},
+            {path:'English/sentence-analysis',element:<SentenceAnalysis/>},
+            {path:'English/reading-comprehension',element: <ReadingComprehension/>},
+            {path:'English/summary-writing',element:<SummaryWriting/>},
+            {path:'cs',element: <Navigate to='/category/cs/algorithm-visualization' />},
+            {path:'cs/algorithm-visualization',element: <Algorithm_Visualization/>},
+            {path:'cs/code-refactoring',element: <Code_Refactoring/>},
+            {path:'cs/code-convert',element: <Code_Convert/>},
+            {path:'cs/code-completion',element: <Code_Completion/>}
         ]
     }, 
 ]

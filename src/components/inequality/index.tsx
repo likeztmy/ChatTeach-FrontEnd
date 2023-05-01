@@ -4,6 +4,7 @@ import keyboard from '../../../assets/keyboard.png'
 import add from '../../../assets/add.png'
 import delete_icon from '../../../assets/delete.png'
 import { nanoid } from 'nanoid'
+import Loading from '../loading'
 
 interface formula{
     id: string,
@@ -14,6 +15,8 @@ export default function Inequality() {
 
 
     const [pic,setPic] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
+
     const [formulas,setFormulas] = useState<formula[]>([
         {
             id:nanoid(),
@@ -61,12 +64,14 @@ export default function Inequality() {
     }
 
     async function submit() {
+        setPic('')
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append('number',`${formulas.length}`)
         for(let i = 0; i < formulas.length; i++){
             formdata.append(`lst${i}`,formulas[i].content)
         }
-        const url='http://127.0.0.1:5000/api/inequality-plot';
+        const url='http://101.43.180.21:5000/api/inequality-plot';
 
         const response = await fetch(url, {
             method: 'POST', 
@@ -82,6 +87,7 @@ export default function Inequality() {
         res.then(
             data => {
                 console.log(data)
+                setIsLoading(false)
                 setPic('data:image/png;base64,'+data.image)
             }
         )
@@ -117,8 +123,11 @@ export default function Inequality() {
                     )
                 }
             </div>
-            <div className='img-box'>
-                    <img src={pic} alt=''/>
+            <div className='result'>
+                {pic&&<div className='img-box'>
+                        <img src={pic} alt=''/>
+                </div>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )

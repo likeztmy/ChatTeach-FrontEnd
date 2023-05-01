@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
-import search from '../../../assets/search.png'
+import React, { useEffect, useRef, useState } from 'react'
+import Header from '../header'
 import './index.less'
+import { getJson } from '../../server/fetch'
+import loading from '../../../../assets/loading.gif'
 import Loading from '../loading'
 
-export default function LearnWord() {
+export default function PoemVisual() {
 
     const [content,setContent] = useState('')
+    const [pic,setPic] = useState('')
     const [isLoading,setIsLoading] = useState(false)
 
-    const [story,setStory] = useState('')
     const changeContent = (e: { target: { value: React.SetStateAction<string> } }) => {
         setContent(e.target.value)
     }
@@ -19,15 +21,16 @@ export default function LearnWord() {
 
     async function submit (){
         // Default options are marked with *
-        setStory('')
         setIsLoading(true)
+        setPic('')
         const formdata = new FormData()
-        formdata.append('word',content)
-        const url='http://101.43.180.21:5000/api/story-generate';
+        formdata.append('text',content)
+        const url='http://101.43.180.21:5000/api/poem-visual';
         console.log(formdata,content)
 
         const response = await fetch(url, {
             method: 'POST', 
+            mode: 'no-cors',
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -39,34 +42,32 @@ export default function LearnWord() {
         const res = response.json()
         res.then(
             data => {
-                console.log(data.text)
+                console.log(data)
                 setIsLoading(false)
-                setStory(data.text)
+                setPic('data:image/png;base64,'+data.image)
             }
         )
     }
 
+    useEffect(() => {
+        let msg = navigator.userAgent
+        console.log(msg)
+    },[])
 
     return (
-        <div className='learn-word-wrapper'>
+        <div className='poem-visual-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <div className='input-wrapper'>
-                        <input type='text' className='input-box' value={content} onChange={changeContent} placeholder='请输入生词'/>
-                        <div className='search'>
-                            <img src={search} alt="" />
-                        </div>
-                    </div>
+                    <textarea className='input-box' onChange={changeContent} cols={75} rows={6} placeholder='请输入古诗词'/>
                     <div className='btn'>
                         <div className='btn-clear' onClick={clear}>清空</div>
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                {!isLoading&&<div className='story-box'>
-                    {story===''&&<div className='waiting'>故事生成中......</div>}
-                    {story!==''&&<div className='story'>{story}</div>}
+                {pic&&<div className='img-box'>
+                    <img src={pic} alt=''/>
                 </div>}
-                {isLoading&&<Loading/>}
+                {isLoading&&<Loading />}
             </div>
         </div>
     )

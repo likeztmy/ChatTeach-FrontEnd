@@ -5,6 +5,7 @@ import add from '../../../assets/add.png'
 import delete_icon from '../../../assets/delete.png'
 import { nanoid } from 'nanoid'
 import { Radio, RadioChangeEvent } from 'antd'
+import Loading from '../loading'
 
 interface variable {
     id: string,
@@ -13,10 +14,12 @@ interface variable {
     right: string
 }
 
-export default function Function_Img() {
+export default function FunctionImg() {
 
     const [func,setFunc] = useState('')
     const [pic,setPic] = useState('')
+    const [isLoading,setIsLoading] = useState(false)
+
     const [variables,setVariables] = useState<variable[]>([
         {
             id: nanoid(),
@@ -111,6 +114,8 @@ export default function Function_Img() {
 
     async function submit (){
         // Default options are marked with *
+        setPic('')
+        setIsLoading(true)
         const formdata = new FormData()
         formdata.append('function',func)
         formdata.append('option',`${variables.length}`)
@@ -119,7 +124,7 @@ export default function Function_Img() {
             formdata.append(`variable_range_left${i+1}`,variables[i].left)
             formdata.append(`variable_range_right${i+1}`,variables[i].right)
         }
-        const url='http://127.0.0.1:5000/api/function-plot';
+        const url='http://101.43.180.21:5000/api/function-plot';
         console.log(formdata,func)
 
         const response = await fetch(url, {
@@ -136,6 +141,7 @@ export default function Function_Img() {
         res.then(
             data => {
                 console.log(data)
+                setIsLoading(false)
                 setPic('data:image/png;base64,'+data.image)
             }
         )
@@ -192,9 +198,10 @@ export default function Function_Img() {
                         )
                     }
                 </div>
-                <div className='img-box'>
+                {pic&&<div className='img-box'>
                     <img src={pic} alt=''/>
-                </div>
+                </div>}
+                {isLoading&&<Loading/>}
             </div>
         </div>
     )
