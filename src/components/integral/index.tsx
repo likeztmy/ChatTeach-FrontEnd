@@ -39,6 +39,9 @@ export default function IntegralAnalysis() {
 
     const clear = () => {
         setFunc('')
+        setPic1('')
+        setPic2('')
+        setIsLoading(false)
     }
 
     const changeType = (e:RadioChangeEvent) => {
@@ -106,59 +109,59 @@ export default function IntegralAnalysis() {
             compute_definite_integral(func,variable.name,`${variable.left}`,`${variable.right}`).then(
                 data => {
                     setIsLoading(false)
-                    setPic1(data.image)
+                    setPic1('data:image/png;base64,'+data.image)
                 }
             )
             generate_definite_integral_image(func,variable.name,`${variable.left}`,`${variable.right}`).then(
                 data => {
                     setIsLoading(false)
-                    setPic2(data.image)
+                    setPic2('data:image/png;base64,'+data.image)
                 }
             )
         }else if(type === '不定积分'){
             compute_indefinite_integral(func,variable.name).then(
                 data => {
                     setIsLoading(false)
-                    setPic1(data.image)
+                    setPic1('data:image/png;base64,'+data.image)
                 }
             )
             generate_indefinite_integral_image(func,variable.name).then(
                 data => {
                     setIsLoading(false)
-                    setPic2(data.image)
+                    setPic2('data:image/png;base64,'+data.image)
                 }
             )
-        }else if(type ==='求导'){
+        }else if(type ==='导数'){
             derivative(func).then(
                 data => {
                     setIsLoading(false)
-                    setPic1(data.image)
+                    setPic1('data:image/png;base64,'+data.image)
                 }
             )
             generate_derivative_image(func).then(
                 data => {
                     setIsLoading(false)
-                    setPic2(data.image)
+                    setPic2('data:image/png;base64,'+data.image)
                 }
             )
         }else if(type === '极限'){
             compute_lim(func,variable.name,variable.left).then(
                 data => {
                     setIsLoading(false)
-                    setPic1(data.image)
+                    setPic1('data:image/png;base64,'+data.image)
                 }
             )
             generate_lim_image(func,variable.name,variable.left).then(
                 data => {
                     setIsLoading(false)
-                    setPic2(data.image)
+                    setPic2('data:image/png;base64,'+data.image)
                 }
             )
         }else {
             compute_grad(func).then(
                 data => {
                     setIsLoading(false)
-                    setPic1(data.image)
+                    setPic1('data:image/png;base64,'+data.image)
                 }
             )
         }

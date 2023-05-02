@@ -36,6 +36,8 @@ export default function FunctionImg() {
     
     const clear = () => {
         setFunc('')
+        setIsLoading(false)
+        setPic('')
     }
 
 

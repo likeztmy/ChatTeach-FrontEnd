@@ -20,6 +20,9 @@ export default function ReadingComprehension() {
 
     const clear = () => {
         setContent('')
+        setTable('')
+        setIsLoading(false)
+        setSelected('')
     }
 
     const chooseLevel = (level: string) => {
@@ -30,32 +33,27 @@ export default function ReadingComprehension() {
         const files = e.target.files
         if(!files) return
         const file = files[0]
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onload = async function(e){
-            const image_data = reader.result
-            console.log(image_data)
-            const data = {
-                    'image_data': image_data
-                }
-            const response = await fetch('http://101.43.180.21:5000/api/ocr-image-identification',{
-                method: 'POST', 
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                /*  redirect: 'follow', */ // manual, *follow, error
-                body: JSON.stringify(data) // body data type must match "Content-Type" header
-            })
-            const res = response.json()
-            res.then(
-                data => {
-                    console.log(data)
-                    setContent(data.text)
-                    // setTable(data.text)
-                }
-            )
-        }
+        
+        console.log(file)
+        const formdata = new FormData()
+        formdata.append('file',file)
+        console.log(formdata)
+        const response = await fetch('http://101.43.180.21:5000/api/ocr-image-identification',{
+            method: 'POST', 
+            headers: {
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            /*  redirect: 'follow', */ // manual, *follow, error
+            body: formdata // body data type must match "Content-Type" header
+        })
+        const res = response.json()
+        res.then(
+            data => {
+                console.log(data)
+                setContent(data.text)
+                // setTable(data.text)
+            }
+        )
     }
 
     async function submit (){
@@ -83,6 +81,7 @@ export default function ReadingComprehension() {
             data => {
                 const title = '|   单词   |   词性   |  含义     |   词频    |   例句   | \n | :------: |:--------:|:--------:|:--------:|:--------:| \n '
                 console.log(data)
+                setIsLoading(false)
                 setTable(title+data.text)
             }
         )

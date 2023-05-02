@@ -1,6 +1,76 @@
 .algorithm-visualization-wrapper {
     display: flex;
     justify-content: center;
+    .sider {
+        display: flex;
+        flex-direction: column;
+        gap: 2vh;
+        max-height: 100vh;
+        overflow-y: scroll;
+        .content-box {
+            width: 15vw;
+            display: flex;
+            flex-direction: column;
+            gap: 1vh;
+            font-family: 'STFSong';
+            .content-box-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1vh 1vw;
+                cursor: pointer;
+                .arrow {
+                    max-width: 16px;
+                    max-height: 16px;
+                    transition: all .2s ease-in-out;
+                    img {
+                        width: 100%;
+                    }
+                }
+                .arrow-rotate {
+                    transform:rotateZ(90deg);
+                    transition: all .2s ease-in-out;
+                }
+            }
+            .active {
+                background-color: #F7E0E2;
+            }
+            .content-box-list {
+                display: flex;
+                flex-direction: column;
+                gap: 1vh;
+                font-size: 12px;
+                height: 10vh;
+                overflow-y: hidden;
+                transition: all .2s ease-in-out;
+                .list-item {
+                    padding: 1vh 1vw;
+                    cursor: pointer;
+                }
+                .list-item-selected {
+                    position: relative;
+                    background-color: #F7E0E2;
+                }
+                .list-item-selected::after {
+                    content: '';
+                    height: 100%;
+                    width: 2px;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    background-color: #F0ABB2;
+                }
+            }
+            .content-box::-webkit-scrollbar-corner {
+                width: 0;
+                height: 0;
+            }
+            .list-close {
+                height: 0;
+                transition: all .2s ease-in-out;
+            }
+        }
+    }
     .content-wrapper {
         position: relative;
         display: flex;

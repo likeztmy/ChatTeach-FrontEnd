@@ -6,8 +6,12 @@ import math_icon from '../../../assets/math.png'
 import en_icon from '../../../assets/English.png'
 import cs_icon from '../../../assets/cs.png'
 import './index.less'
+import { useNavigate } from 'react-router-dom'
 
 export default function Home() {
+
+    const navigate = useNavigate()
+
     return (
         <div className='home-wrapper'>
             <Header/>
@@ -80,7 +84,7 @@ export default function Home() {
                                 <li>情境化问题设计</li>
                             </ul>
                         </div>
-                        <div className='more'>更多</div>
+                        <div className='more' onClick={()=>{navigate('/category/Chinese')}}>更多</div>
                     </div>
                     <div className='math-box'>
                         <div className='math-icon'>
@@ -95,7 +99,7 @@ export default function Home() {
                                 <li>微分方程</li>
                             </ul>
                         </div>
-                        <div className='more'>更多</div>
+                        <div className='more' onClick={()=>{navigate('/category/math')}}>更多</div>
                     </div>
                     <div className='en-box'>
                         <div className='en-icon'>
@@ -110,7 +114,7 @@ export default function Home() {
                                 <li>概要写作</li>
                             </ul>
                         </div>
-                        <div className='more'>更多</div>
+                        <div className='more' onClick={()=>{navigate('/category/English')}}>更多</div>
                     </div>
                     <div className='cs-box'>
                         <div className='cs-icon'>
@@ -119,13 +123,13 @@ export default function Home() {
                         <div className='cs-name'>信息技术</div>
                         <div className='cs-content'>
                             <ul>
-                                <li>函数图象</li>
-                                <li>不等式</li>
-                                <li>积分分析</li>
-                                <li>微分方程</li>
+                                <li>算法可视化</li>
+                                <li>代码重构</li>
+                                <li>代码转换</li>
+                                <li>代码补全</li>
                             </ul>
                         </div>
-                        <div className='more'>更多</div>
+                        <div className='more' onClick={()=>{navigate('/category/cs')}}>更多</div>
                     </div>
                 </div>
             </div>

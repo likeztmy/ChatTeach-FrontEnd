@@ -22,12 +22,11 @@ export default function Code_Completion() {
         setPic('')
         const formdata = new FormData()
         formdata.append('code',content)
-        const url='http://101.43.180.21:5000/api/code-refactor';
+        const url='http://101.43.180.21:5000/api/code-fill';
         console.log(formdata,content)
 
         const response = await fetch(url, {
             method: 'POST', 
-            mode: 'no-cors',
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -48,13 +47,15 @@ export default function Code_Completion() {
     const clear = () => {
         setContent('')
         setIsLoading(false)
+        setPic('')
+        setMd('')
     }
     
     return (
         <div className='code-completion-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <textarea className='input-box' onChange={changeContent} cols={50} rows={6} placeholder='请输入原始代码'/>
+                    <textarea className='input-box' value={content} onChange={changeContent} cols={50} rows={6} placeholder='请输入原始代码'/>
                     <div className='btn'>
                         <div className='btn-clear' onClick={clear}>清空</div>
                         <div className='btn-submit' onClick={submit}>确定</div>

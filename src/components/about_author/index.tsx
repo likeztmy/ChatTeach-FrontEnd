@@ -16,6 +16,9 @@ export default function AboutAuthor() {
 
     const clear = () => {
         setContent('')
+        setIsLoading(false)
+        setPic('')
+        setSwf('')
     }
 
 
@@ -37,7 +40,6 @@ export default function AboutAuthor() {
 
         const response = await fetch(url, {
             method: 'POST', 
-            mode: 'no-cors',
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',

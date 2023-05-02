@@ -57,13 +57,15 @@ export default function Code_Convert() {
     const clear = () => {
         setContent('')
         setIsLoading(false)
+        setPic('')
+        setMd('')
     }
     
     return (
         <div className='code-convert-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <textarea className='input-box' onChange={changeContent} cols={50} rows={6} placeholder='请输入原始代码'/>
+                    <textarea className='input-box' value={content}  onChange={changeContent} cols={50} rows={6} placeholder='请输入原始代码'/>
                     <div className='code-type-box'>
                         <div className='code-type-title'>转换类型：</div>
                         <Radio.Group onChange={changeType} value={type}>

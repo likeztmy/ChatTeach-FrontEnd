@@ -16,6 +16,8 @@ export default function SummaryWriting() {
 
     const clear = () => {
         setContent('')
+        setIsLoading(false)
+        setTable('')
     }
 
     async function chooseImage (e: React.ChangeEvent<HTMLInputElement>){

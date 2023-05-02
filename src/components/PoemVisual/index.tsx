@@ -17,6 +17,8 @@ export default function PoemVisual() {
 
     const clear = () => {
         setContent('')
+        setPic('')
+        setIsLoading(false)
     }
 
     async function submit (){
@@ -30,7 +32,6 @@ export default function PoemVisual() {
 
         const response = await fetch(url, {
             method: 'POST', 
-            mode: 'no-cors',
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
                 // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -58,7 +59,7 @@ export default function PoemVisual() {
         <div className='poem-visual-wrapper'>
             <div className='content-wrapper'>
                 <div className='form'>
-                    <textarea className='input-box' onChange={changeContent} cols={75} rows={6} placeholder='请输入古诗词'/>
+                    <textarea className='input-box' value={content}  onChange={changeContent} cols={75} rows={6} placeholder='请输入古诗词'/>
                     <div className='btn'>
                         <div className='btn-clear' onClick={clear}>清空</div>
                         <div className='btn-submit' onClick={submit}>确定</div>

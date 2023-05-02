@@ -590,18 +590,18 @@ const words4 = [
         regex: "(?<=以)衣帛(?=矣)",
     },
     {
-        name: "豚(tún):小猪。",
-        mean: "undefined",
+        name: "豚",
+        mean: "豚(tún):小猪。",
         regex: "(?<=鸡)豚(?=狗)",
     },
     {
-        name: "彘(zhì):猪。",
-        mean: "undefined",
+        name: "彘",
+        mean: "彘(zhì):猪。",
         regex: "(?<=狗)彘(?=之)",
     },
     {
-        name: "畜:畜养，饲养。",
-        mean: "undefined",
+        name: "畜",
+        mean: "畜养，饲养。",
         regex: "(?<=之)畜(?=，)",
     },
     {

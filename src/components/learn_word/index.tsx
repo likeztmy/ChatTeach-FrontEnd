@@ -15,6 +15,8 @@ export default function LearnWord() {
 
     const clear = () => {
         setContent('')
+        setIsLoading(false)
+        setStory('')
     }
 
     async function submit (){

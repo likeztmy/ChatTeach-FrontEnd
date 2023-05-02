@@ -42,6 +42,7 @@ export default function Inequality() {
             else return formula
         })
         setFormulas(newFormulas)
+        setPic('')
     }
 
     const reset = (id: string) => {

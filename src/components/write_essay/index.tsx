@@ -17,10 +17,14 @@ export default function WriteEssay() {
 
     const clear = () => {
         setContent('')
+        setTable('')
+        setExplanation('')
+        setIsLoading(false)
     }
     async function submit (){
         // Default options are marked with *
         setTable('')
+        setExplanation('')
         setIsLoading(true)
         const formdata = new FormData()
         formdata.append('theme',content)
@@ -43,9 +47,8 @@ export default function WriteEssay() {
                 console.log(data)
                 setIsLoading(false)
                 const texts = data.text.split('\n\n')
-                console.log(texts)
                 setExplanation(texts[0])
-                setTable(texts[1])
+                setTable(data.text)
             }
         )
     }
@@ -55,7 +58,7 @@ export default function WriteEssay() {
             <div className='content-wrapper'>
                 <div className="box">
                     <div className='form'>
-                        <input type='text' className='input-box' onChange={changeContent} placeholder='请输入关键词'/>
+                        <input type='text' className='input-box' value={content}  onChange={changeContent} placeholder='请输入关键词'/>
                         <div className='btn'>
                             <div className='btn-clear' onClick={clear}>清空</div>
                             <div className='btn-submit' onClick={submit}>确定</div>

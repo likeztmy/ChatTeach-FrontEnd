@@ -14,7 +14,10 @@ export default function DE() {
     }
 
     const clear = () => {
+        setIsLoading(false)
         setFunc('')
+        setPic1('')
+        setPic2('')
     }
 
     async function submit (){
@@ -38,15 +41,7 @@ export default function DE() {
             body: formdata // body data type must match "Content-Type" header
         });
     
-        const res1 = response1.json()
-        res1.then(
-            data => {
-                setIsLoading(false)
-                setPic1('data:image/png;base64,'+data.image)
-            }
-        )
-
-        const response2 = await fetch(url1, {
+        const response2 = await fetch(url2, {
             method: 'POST', 
             headers: {
                 // 'Content-Type': 'application/json;charset=utf-8',
@@ -55,6 +50,14 @@ export default function DE() {
             /*  redirect: 'follow', */ // manual, *follow, error
             body: formdata // body data type must match "Content-Type" header
         });
+
+        const res1 = response1.json()
+        res1.then(
+            data => {
+                setIsLoading(false)
+                setPic1('data:image/png;base64,'+data.image)
+            }
+        )
     
         const res2 = response2.json()
         res2.then(
