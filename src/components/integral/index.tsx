@@ -168,11 +168,13 @@ export default function IntegralAnalysis() {
     }
 
     return (
-        <div className='function-img-wrapper'>
+        <div className='integral-analysis-wrapper'>
             <div className="content-wrapper">
                 <div className="box">
                     <div className='function-form'>
-                        <input type="text" value={func} onChange={changeFunc} className="input-box"  placeholder='请输入积分方程'/>
+                        {(type==='定积分'||type==='不定积分')&&<input type="text" value={func} onChange={changeFunc} className="input-box"  placeholder='请输入积分方程'/>}
+                        {(type==='导数'||type==='梯度'||type==='极限')&&<input type="text" value={func} onChange={changeFunc} className="input-box"  placeholder='请输入式子'/>}
+
                         <img src={keyboard} alt="键盘" />
                         <div className='btn'>
                             <div className='btn-clear' onClick={clear}>清空</div>
@@ -215,11 +217,16 @@ export default function IntegralAnalysis() {
                         </div>
                     </div>
                 </div>
-                {pic1&&<div className='img-box'>
-                    <img src={pic1} alt=''/>
+                {type!=='梯度'&&<div className='picBox'>
+                    {pic1&&<div className='img-box'>
+                        <img src={pic1} alt=''/>
+                    </div>}
+                    {pic2&&<div className='img-box'>
+                        <img src={pic2} alt=''/>
+                    </div>}
                 </div>}
-                {pic2&&<div className='img-box'>
-                    <img src={pic2} alt=''/>
+                {type==='梯度'&&<div className='img-box'>
+                    <img src={pic1} alt=''/>
                 </div>}
                 {isLoading&&<Loading/>}
             </div>

@@ -82,12 +82,14 @@ export default function DE() {
                         <div className='btn-submit' onClick={submit}>确定</div>
                     </div>
                 </div>
-                {pic1&&<div className='img-box'>
-                    <img src={pic1} alt=''/>
-                </div>}
-                {pic2&&<div className='img-box'>
-                    <img src={pic2} alt=''/>
-                </div>}
+                <div className='picBox'>
+                    {pic1&&<div className='img-box'>
+                        <img src={pic1} alt=''/>
+                    </div>}
+                    {pic2&&<div className='img-box'>
+                        <img src={pic2} alt=''/>
+                    </div>}
+                </div>
                 {isLoading&&<Loading/>}
             </div>
         </div>
